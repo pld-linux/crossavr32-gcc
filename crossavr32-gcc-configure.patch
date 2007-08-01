@@ -1,0 +1,11 @@
+--- configure.in.old	2007-07-28 19:27:17.000000000 +0200
++++ configure.in	2007-07-28 20:17:24.000000000 +0200
+@@ -2055,7 +2055,7 @@
+ # sorts of decisions they want to make on this basis.  Please consider
+ # this option to be deprecated.  FIXME.
+ if test x${is_cross_compiler} = xyes ; then
+-  target_configargs="--with-cross-host=${host_alias} ${target_configargs}"
++  target_configargs="--with-cross-host=${host_alias} ${target_configargs} CFLAGS=\"$CFLAGS_FOR_TARGET\" --host=avr32-pld-linux"
+ fi
+ 
+ # Default to --enable-multilib.
