@@ -1,4 +1,3 @@
-# $RevOCision: 1.31 $, $Date: 2007-08-01 20:42:29 $
 #
 # Conditional build:
 %bcond_with	bootstrap	# for bootstraping
@@ -13,12 +12,13 @@ Name:		crossavr32-gcc
 Version:	4.2.1
 Release:	0.6%{?with_bootstrap:.bootstrap}
 Epoch:		1
-License:	GPL
+License:	GPL v2+
 Group:		Development/Languages
 Source0:	ftp://gcc.gnu.org/pub/gcc/releases/gcc-%{version}/gcc-%{version}.tar.bz2
 # Source0-md5:	cba410e6ff70f7d7f4be7a0267707fd0
 Patch0:		%{name}.patch
 Patch1:		%{name}-configure.patch
+URL:		http://gcc.gnu.org/
 BuildRequires:	/bin/bash
 BuildRequires:	autoconf
 BuildRequires:	bison
@@ -46,7 +46,7 @@ anderem Rechner Code für Atmel AVR32 zu generieren.
 
 %description -l pl.UTF-8
 Ten pakiet zawiera skrośny gcc pozwalający na robienie na innych
-maszynach binariów do uruchamiania na Atmel AVR.
+maszynach binariów do uruchamiania na platformie Atmel AVR.
 
 %package c++
 Summary:	C++ support for avr32-gcc
@@ -56,10 +56,11 @@ Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description c++
 This package adds C++ support to the GNU Compiler Collection for
-AVR32.
+Atmel AVR32.
 
 %description c++ -l pl.UTF-8
-Ten pakiet dodaje obsługę C++ do kompilatora gcc dla AVR32.
+Ten pakiet dodaje obsługę C++ do kompilatora gcc dla platformy Atmel
+AVR32.
 
 %package -n crossavr32-libgomp
 Summary:	GNU OpenMP library
@@ -74,7 +75,7 @@ GNU OpenMP library.
 Biblioteka GNU OpenMP.
 
 %package -n crossavr32-libstdc++
-Summary:	GNU C++ library
+Summary:	GNU C++ libraries
 Summary(pl.UTF-8):	Biblioteki GNU C++
 License:	GPL v2+ with free software exception
 Group:		Libraries
@@ -83,6 +84,11 @@ Group:		Libraries
 This is the GNU implementation of the standard C++ libraries, along
 with additional GNU tools. This package includes the shared libraries
 necessary to run C++ applications.
+
+%description -n crossavr32-libstdc++ -l pl.UTF-8
+Implementacja GNU standardowych bibliotek C++ wraz z dodatkowymi
+narzędziami do C++. Ten pakiet zawiera biblioteki współdzielone
+potrzebne do uruchamiania aplikacji w C++.
 
 %prep
 %setup -q -n gcc-%{version}
@@ -135,7 +141,9 @@ TEXCONFIG=false \
 
 CXXFLAGS_FOR_TARGET="-Os"
 export CXXFLAGS_FOR_TARGET
-%{__make} CFLAGS_FOR_TARGET="-Os" CXXFLAGS_FOR_TARGET="-Os"
+%{__make} \
+	CFLAGS_FOR_TARGET="-Os" \
+	CXXFLAGS_FOR_TARGET="-Os"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -204,5 +212,4 @@ rm -rf $RPM_BUILD_ROOT
 %{arch}/lib/uc/libstdc*
 %{arch}/lib/uc/libsupc*
 %{arch}/include/c++
-
 %endif
